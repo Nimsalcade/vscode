@@ -749,10 +749,10 @@ export class GettingStartedPage extends EditorPane {
 	async selectStepLoose(id: string) {
 		// Allow passing in id with a category appended or with just the id of the step
 		if (id.startsWith(`${this.editorInput.selectedCategory}#`)) {
-			this.selectStep(id);
+			await this.selectStep(id);
 		} else {
-			const toSelect = this.editorInput.selectedCategory + '#' + id;
-			this.selectStep(toSelect);
+			const toSelect = `${this.editorInput.selectedCategory}#${id}`;
+			await this.selectStep(toSelect);
 		}
 	}
 
