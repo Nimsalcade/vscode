@@ -1,0 +1,8 @@
+body { font-family: var(--vscode-font-family); margin: 0; padding: 0; }
+#messages { padding: 8px; height: calc(100vh - 100px); overflow: auto; }
+.msg { padding: 6px 8px; border-radius: 6px; margin: 6px 4px; white-space: pre-wrap; }
+.msg.user { background: var(--vscode-textBlockQuote-background); }
+.msg.assistant { background: var(--vscode-editorInlayHint-parameterBackground); }
+.input-row { display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--vscode-panel-border); }
+#prompt { flex: 1; }
+button { padding: 6px 12px; }

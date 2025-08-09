@@ -1,0 +1,105 @@
+{
+  "name": "vscode-swe-agent",
+  "displayName": "SWE Agent",
+  "description": "An AI SWE agent with full codebase context and edit/apply capabilities inside VS Code.",
+  "version": "0.0.1",
+  "publisher": "your-publisher",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:sweAgent.openPanel",
+    "onCommand:sweAgent.applyPlan",
+    "onCommand:sweAgent.setApiKey"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "sweAgent.openPanel",
+        "title": "Open SWE Agent"
+      },
+      {
+        "command": "sweAgent.applyPlan",
+        "title": "SWE Agent: Apply Proposed Changes"
+      },
+      {
+        "command": "sweAgent.setApiKey",
+        "title": "SWE Agent: Set API Key"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "sweAgent.openPanel",
+        "key": "ctrl+k ctrl+a",
+        "mac": "cmd+k cmd+a",
+        "when": "editorTextFocus"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sweAgent",
+          "title": "SWE Agent",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "sweAgent": [
+        {
+          "id": "sweAgent.chatView",
+          "name": "Chat"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SWE Agent",
+      "properties": {
+        "sweAgent.provider": {
+          "type": "string",
+          "default": "openai",
+          "enum": ["openai", "anthropic", "ollama", "custom"],
+          "description": "Model provider to use."
+        },
+        "sweAgent.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for the selected provider.",
+          "markdownDescription": "API key for the selected provider. For better security, prefer using the VS Code Secret Storage via the command: SWE Agent: Set API Key."
+        },
+        "sweAgent.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Optional base URL for the provider (e.g., custom gateways or local servers)."
+        },
+        "sweAgent.model": {
+          "type": "string",
+          "default": "gpt-4o-mini",
+          "description": "Model name to use (varies by provider)."
+        },
+        "sweAgent.allowDirectApply": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, the agent may apply edits without preview (not recommended)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -w -p .",
+    "lint": "echo 'No linter configured'",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.5.4",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {}
+}
