@@ -479,11 +479,11 @@ export class UserDataProfileImportExportService extends Disposable implements IU
 	}
 
 	private getProfileNameIndex(name: string): number {
-		const nameRegEx = new RegExp(`${escapeRegExpCharacters(name)}\\s(\\d+)`);
+		const nameRegEx = new RegExp(`^${escapeRegExpCharacters(name)}\\s(\\d+)$`);
 		let nameIndex = 0;
 		for (const profile of this.userDataProfilesService.profiles) {
 			const matches = nameRegEx.exec(profile.name);
-			const index = matches ? parseInt(matches[1]) : 0;
+			const index = matches ? parseInt(matches[1], 10) : 0;
 			nameIndex = index > nameIndex ? index : nameIndex;
 		}
 		return nameIndex + 1;

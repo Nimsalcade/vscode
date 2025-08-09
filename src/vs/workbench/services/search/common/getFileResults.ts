@@ -32,11 +32,19 @@ export const getFileResults = (
 
 	const patternIndices: { matchStartIndex: number; matchedText: string }[] = [];
 
+	// Ensure we use a global regex and start from index 0; also guard against zero-width matches
+	const regex = pattern.global ? pattern : new RegExp(pattern.source, pattern.flags + 'g');
+	regex.lastIndex = 0;
+
 	let patternMatch: RegExpExecArray | null = null;
 	let remainingResultQuota = options.remainingResultQuota;
-	while (remainingResultQuota >= 0 && (patternMatch = pattern.exec(text))) {
+	while (remainingResultQuota >= 0 && (patternMatch = regex.exec(text))) {
 		patternIndices.push({ matchStartIndex: patternMatch.index, matchedText: patternMatch[0] });
 		remainingResultQuota--;
+		// Avoid infinite loops on zero-width matches
+		if (patternMatch[0].length === 0) {
+			regex.lastIndex++;
+		}
 	}
 
 	if (patternIndices.length) {
